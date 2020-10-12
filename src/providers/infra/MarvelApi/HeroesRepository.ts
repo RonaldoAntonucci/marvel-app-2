@@ -15,7 +15,7 @@ class HeroRepository implements IHeroRepository {
   async findHeroes(): Promise<HeroProps[]> {
     const response = await this.api.get(`characters`);
 
-    return response.data.data;
+    return response.data.data.results;
   }
 }
 
