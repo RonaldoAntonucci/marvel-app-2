@@ -16,18 +16,26 @@ interface UseHeroes {
   heroes: HeroProps[];
 
   loadHeroes(): void;
+  setNameStartsWithFilter(hero: string): void;
 }
 
 const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
   const [heroes, setHeroes] = useState<HeroProps[]>([]);
+  const [nameStartsWith, setNameStartsWith] = useState('');
 
   const loadHeroes = useCallback(async () => {
-    const heroesResponse = await heroesRepository.findHeroes();
+    const apiHeroes = await heroesRepository.findHeroes({
+      filters: { nameStartsWith },
+    });
 
-    setHeroes(heroesResponse);
-  }, [heroesRepository]);
+    setHeroes(apiHeroes);
+  }, [heroesRepository, nameStartsWith]);
 
-  return { heroes, loadHeroes };
+  const setNameStartsWithFilter = useCallback((searchHeroValue: string) => {
+    setNameStartsWith(searchHeroValue);
+  }, []);
+
+  return { heroes, loadHeroes, setNameStartsWithFilter };
 };
 
 export default useHeroes;

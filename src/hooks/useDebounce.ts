@@ -1,6 +1,5 @@
-import { DebouncedFunc } from 'lodash';
+import { DebouncedFunc, debounce } from 'lodash';
 import { useEffect, useState } from 'react';
-import debounce from '../util/debounce';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type useDebounceProps = (...args: any[]) => any;

@@ -8,8 +8,16 @@ export interface HeroProps {
   };
 }
 
+export interface iFindHeroesDTO {
+  filters?: {
+    nameStartsWith?: string;
+  };
+}
+
 interface HeroesRepository {
-  findHeroes(): Promise<HeroProps[]>;
+  findHeroes(dto?: iFindHeroesDTO): Promise<HeroProps[]>;
+
+  findHeroByName(name: string): Promise<HeroProps[]>;
 }
 
 export default HeroesRepository;
