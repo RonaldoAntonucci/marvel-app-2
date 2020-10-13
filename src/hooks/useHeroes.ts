@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext } from 'react';
 
 import IHeroRepository from '../repositories/iHeroesRepository';
+
+import { HeroesContext } from '../contexts/heroesContext';
 
 interface HeroProps {
   id: string;
@@ -22,8 +24,16 @@ interface UseHeroes {
 }
 
 const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
-  const [heroes, setHeroes] = useState<HeroProps[]>([]);
-  const [nameStartsWith, setNameStartsWith] = useState('');
+  const heroesContexts = useContext(HeroesContext);
+
+  if (!heroesContexts) {
+    throw new Error('useHeroes must be used within an HeroesProvider.');
+  }
+
+  const { heroesState, nameStartsWithState } = heroesContexts;
+
+  const [heroes, setHeroes] = heroesState;
+  const [nameStartsWith, setNameStartsWith] = nameStartsWithState;
 
   const loadHeroes = useCallback(async () => {
     console.log('testando');
@@ -33,12 +43,14 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
     });
 
     setHeroes(apiHeroes);
-  }, [heroesRepository, nameStartsWith]);
+  }, [heroesRepository, nameStartsWith, setHeroes]);
 
-  const setNameStartsWithFilter = useCallback((searchHeroValue: string) => {
-    console.log(searchHeroValue);
-    setNameStartsWith(searchHeroValue);
-  }, []);
+  const setNameStartsWithFilter = useCallback(
+    (searchHeroValue: string) => {
+      setNameStartsWith(searchHeroValue);
+    },
+    [setNameStartsWith],
+  );
 
   return { heroes, loadHeroes, setNameStartsWithFilter, nameStartsWith };
 };
