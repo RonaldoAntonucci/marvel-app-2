@@ -1,4 +1,10 @@
-import { SetStateAction, useCallback, useContext } from 'react';
+import {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 import IHeroRepository from '../repositories/iHeroesRepository';
 
@@ -16,6 +22,11 @@ interface HeroProps {
 
 interface UseHeroes {
   heroes: HeroProps[];
+  page: number;
+  count: number;
+  total: number;
+  limit: number;
+  offset: number;
 
   loadHeroes(): void;
   setNameStartsWithFilter(hero: string): void;
@@ -31,21 +42,48 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
     throw new Error('useHeroes must be used within an HeroesProvider.');
   }
 
-  const { heroesState, nameStartsWithState, pageState } = heroesContexts;
+  const {
+    heroesState,
+    nameStartsWithState,
+    offsetState,
+    limitState,
+    totalState,
+    countState,
+  } = heroesContexts;
 
   const [heroes, setHeroes] = heroesState;
   const [nameStartsWith, setNameStartsWith] = nameStartsWithState;
-  const [page, setPage] = pageState;
+
+  const [offset, setOffset] = offsetState;
+  const [limit, setLimit] = limitState;
+  const [count, setCount] = countState;
+  const [total, setTotal] = totalState;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const page = useMemo(() => Math.trunc(offset / limit) + 1, [limit, offset]);
 
   const loadHeroes = useCallback(async () => {
     const apiHeroes = await heroesRepository.findHeroes({
       filters: { nameStartsWith },
-      page,
+      page: currentPage,
     });
 
     setHeroes(apiHeroes.results);
-    setPage(apiHeroes.page);
-  }, [heroesRepository, nameStartsWith, page, setHeroes, setPage]);
+    setOffset(apiHeroes.offset);
+    setCount(apiHeroes.count);
+    setTotal(apiHeroes.total);
+    setLimit(apiHeroes.limit);
+  }, [
+    heroesRepository,
+    nameStartsWith,
+    currentPage,
+    setCount,
+    setHeroes,
+    setLimit,
+    setOffset,
+    setTotal,
+  ]);
 
   const setNameStartsWithFilter = useCallback(
     (searchHeroValue: string) => {
@@ -54,9 +92,18 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
     [setNameStartsWith],
   );
 
+  const setPage = useCallback((value) => {
+    setCurrentPage(value);
+  }, []);
+
   return {
     heroes,
     nameStartsWith,
+    page,
+    limit,
+    total,
+    count,
+    offset,
     loadHeroes,
     setNameStartsWithFilter,
     setPage,

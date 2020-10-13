@@ -4,11 +4,20 @@ import useHeroes from '../../hooks/useHeroes';
 import HeroesRepository from '../../providers/HeroesRepository';
 
 import HeroCard from '../../components/HeroCard';
+import Pagination from '../../components/Pagination';
 
 import { Container, HeroesContainer, HeroesGrid } from './styles';
 
 const Home: React.FC = () => {
-  const { loadHeroes, heroes, nameStartsWith } = useHeroes(HeroesRepository);
+  const {
+    loadHeroes,
+    heroes,
+    nameStartsWith,
+    page,
+    setPage,
+    total,
+    limit,
+  } = useHeroes(HeroesRepository);
 
   useEffect(() => {
     loadHeroes();
@@ -27,6 +36,12 @@ const Home: React.FC = () => {
             />
           ))}
         </HeroesGrid>
+        <Pagination
+          page={page}
+          handlePage={setPage}
+          total={total}
+          limit={limit}
+        />
       </HeroesContainer>
     </Container>
   );

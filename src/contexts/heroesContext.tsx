@@ -13,7 +13,11 @@ interface HeroProps {
 interface HeroesContextData {
   heroesState: [HeroProps[], React.Dispatch<SetStateAction<HeroProps[]>>];
   nameStartsWithState: [string, React.Dispatch<SetStateAction<string>>];
-  pageState: [number, React.Dispatch<SetStateAction<number>>];
+
+  totalState: [number, React.Dispatch<SetStateAction<number>>];
+  countState: [number, React.Dispatch<SetStateAction<number>>];
+  limitState: [number, React.Dispatch<SetStateAction<number>>];
+  offsetState: [number, React.Dispatch<SetStateAction<number>>];
 }
 
 const HeroesContext = createContext<HeroesContextData>({} as HeroesContextData);
@@ -21,11 +25,22 @@ const HeroesContext = createContext<HeroesContextData>({} as HeroesContextData);
 const HeroesProvider: React.FC = ({ children }) => {
   const heroesState = useState<HeroProps[]>([]);
   const nameStartsWithState = useState('');
-  const pageState = useState(1);
+
+  const totalState = useState(0);
+  const countState = useState(0);
+  const limitState = useState(15);
+  const offsetState = useState(0);
 
   return (
     <HeroesContext.Provider
-      value={{ heroesState, nameStartsWithState, pageState }}
+      value={{
+        heroesState,
+        nameStartsWithState,
+        totalState,
+        countState,
+        limitState,
+        offsetState,
+      }}
     >
       {children}
     </HeroesContext.Provider>

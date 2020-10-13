@@ -20,6 +20,7 @@ export interface Data {
   limit: number;
   total: number;
   count: number;
+
   page: number;
 
   results: HeroProps[];
