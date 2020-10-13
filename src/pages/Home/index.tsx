@@ -8,7 +8,7 @@ import sizes from '../../styles/sizes';
 
 import HeroCard from '../../components/HeroCard';
 
-import { Container, HeroContainer } from './styles';
+import { Container, HeroesContainer, HeroesGrid } from './styles';
 
 const Home: React.FC = () => {
   const { loadHeroes, heroes } = useHeroes(HeroesRepository);
@@ -19,8 +19,8 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <HeroContainer>
-        <div className="grid">
+      <HeroesContainer>
+        <HeroesGrid>
           {heroes.map((item) => (
             <HeroCard
               colors={colors}
@@ -31,8 +31,8 @@ const Home: React.FC = () => {
               link={`/characters/${item.id}`}
             />
           ))}
-        </div>
-      </HeroContainer>
+        </HeroesGrid>
+      </HeroesContainer>
     </Container>
   );
 };

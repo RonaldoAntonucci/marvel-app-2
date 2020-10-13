@@ -89,7 +89,7 @@ export const Container = styled.div<SizesProps & ColorsProps>`
       ${Title} {
         span {
           color: ${(props) =>
-            props.colors && props.colors.red ? props.colors.red : 'black'};
+            props.colors && props.colors.red ? props.colors.red : 'red'};
         }
       }
     }
