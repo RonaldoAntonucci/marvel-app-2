@@ -8,11 +8,11 @@ import HeroCard from '../../components/HeroCard';
 import { Container, HeroesContainer, HeroesGrid } from './styles';
 
 const Home: React.FC = () => {
-  const { loadHeroes, heroes } = useHeroes(HeroesRepository);
+  const { loadHeroes, heroes, nameStartsWith } = useHeroes(HeroesRepository);
 
   useEffect(() => {
     loadHeroes();
-  }, [loadHeroes]);
+  }, [loadHeroes, nameStartsWith]);
 
   return (
     <Container>

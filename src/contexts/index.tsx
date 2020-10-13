@@ -1,5 +1,4 @@
 import React from 'react';
-import { css } from 'styled-components';
 
 import colors from '../styles/colors';
 import sizes from '../styles/sizes';

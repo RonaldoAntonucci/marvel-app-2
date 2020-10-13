@@ -17,6 +17,8 @@ interface UseHeroes {
 
   loadHeroes(): void;
   setNameStartsWithFilter(hero: string): void;
+
+  nameStartsWith: string;
 }
 
 const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
@@ -24,6 +26,8 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
   const [nameStartsWith, setNameStartsWith] = useState('');
 
   const loadHeroes = useCallback(async () => {
+    console.log('testando');
+
     const apiHeroes = await heroesRepository.findHeroes({
       filters: { nameStartsWith },
     });
@@ -32,10 +36,11 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
   }, [heroesRepository, nameStartsWith]);
 
   const setNameStartsWithFilter = useCallback((searchHeroValue: string) => {
+    console.log(searchHeroValue);
     setNameStartsWith(searchHeroValue);
   }, []);
 
-  return { heroes, loadHeroes, setNameStartsWithFilter };
+  return { heroes, loadHeroes, setNameStartsWithFilter, nameStartsWith };
 };
 
 export default useHeroes;
