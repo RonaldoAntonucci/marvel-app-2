@@ -12,6 +12,7 @@ export interface iFindHeroesDTO {
   filters?: {
     nameStartsWith?: string;
   };
+  page?: number;
 }
 
 export interface Data {
@@ -19,6 +20,7 @@ export interface Data {
   limit: number;
   total: number;
   count: number;
+  page: number;
 
   results: HeroProps[];
 }
