@@ -1,23 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export interface SizesProps {
-  sizes?: {
-    XS?: string;
-    SM?: string;
-    MD?: string;
-    LG?: string;
-    XL?: string;
-  };
-}
-
-export interface ColorsProps {
-  colors?: {
-    grey?: string;
-    red?: string;
-  };
-}
-
-export const Thumbnail = styled.div`
+const Thumbnail = styled.div`
   position: relative;
   width: 100%;
   height: 188px;
@@ -42,17 +25,20 @@ export const Thumbnail = styled.div`
   }
 `;
 
-export const Title = styled.div<ColorsProps>`
+const Title = styled.div`
   width: 100%;
 
   span {
     font-weight: bold;
-    color: ${(props) =>
-      props.colors && props.colors.grey ? props.colors.grey : 'grey'};
+    color: ${(props) => props.theme.colors.grey};
   }
 `;
 
-export const Container = styled.div<SizesProps & ColorsProps>`
+Title.defaultProps = {
+  theme: { colors: { grey: 'grey' } },
+};
+
+const Container = styled.div`
   width: 100%;
   cursor: pointer;
 
@@ -88,8 +74,7 @@ export const Container = styled.div<SizesProps & ColorsProps>`
     figcaption {
       ${Title} {
         span {
-          color: ${(props) =>
-            props.colors && props.colors.red ? props.colors.red : 'red'};
+          color: ${(props) => props.theme.colors.red};
         }
       }
     }
@@ -118,10 +103,10 @@ export const Container = styled.div<SizesProps & ColorsProps>`
   }
 
   ${(props) =>
-    props.sizes &&
-    props.sizes.MD &&
+    props.theme.sizes &&
+    props.theme.sizes.MD &&
     css`
-      @media (min-width: ${props.sizes.MD}) {
+      @media (min-width: ${props.theme.sizes.MD}) {
         ${Thumbnail} {
           height: 220px;
 
@@ -133,13 +118,24 @@ export const Container = styled.div<SizesProps & ColorsProps>`
     `}
 
   ${(props) =>
-    props.sizes &&
-    props.sizes.XL &&
+    props.theme.sizes &&
+    props.theme.sizes.XL &&
     css`
-      @media (min-width: ${props.sizes.XL}) {
+      @media (min-width: ${props.theme.sizes.XL}) {
         ${Thumbnail} {
           height: 220px;
         }
       }
     `}
 `;
+
+Container.defaultProps = {
+  theme: {
+    colors: {
+      red: 'red',
+    },
+    sizes: null,
+  },
+};
+
+export { Title, Thumbnail, Container };

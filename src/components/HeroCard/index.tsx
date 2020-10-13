@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Container, Thumbnail, Title, SizesProps, ColorsProps } from './styles';
+import { Container, Thumbnail, Title } from './styles';
 
 interface HeroCardProps {
   image: string;
@@ -9,21 +9,15 @@ interface HeroCardProps {
   link: string;
 }
 
-const HeroCard: React.FC<HeroCardProps & SizesProps & ColorsProps> = ({
-  image,
-  name,
-  link,
-  colors,
-  sizes,
-}) => {
+const HeroCard: React.FC<HeroCardProps> = ({ image, name, link }) => {
   return (
-    <Container colors={colors} sizes={sizes}>
+    <Container>
       <Link to={link}>
         <Thumbnail>
           <img src={image} alt={name} />
         </Thumbnail>
         <figcaption>
-          <Title colors={colors}>
+          <Title>
             <span>{name}</span>
           </Title>
         </figcaption>
