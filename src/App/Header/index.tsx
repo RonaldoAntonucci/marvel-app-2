@@ -11,7 +11,7 @@ import { Container, Logo, SearchContainer } from './styles';
 const Header: React.FC = () => {
   const { setNameStartsWithFilter } = useHero(HeroRepository);
 
-  const handleSearch = useDebounce(setNameStartsWithFilter, 1500);
+  const handleSearch = useDebounce(setNameStartsWithFilter, 1000);
 
   return (
     <Container>

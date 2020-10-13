@@ -36,13 +36,11 @@ const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
   const [nameStartsWith, setNameStartsWith] = nameStartsWithState;
 
   const loadHeroes = useCallback(async () => {
-    console.log('testando');
-
     const apiHeroes = await heroesRepository.findHeroes({
       filters: { nameStartsWith },
     });
 
-    setHeroes(apiHeroes);
+    setHeroes(apiHeroes.results);
   }, [heroesRepository, nameStartsWith, setHeroes]);
 
   const setNameStartsWithFilter = useCallback(

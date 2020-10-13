@@ -14,10 +14,19 @@ export interface iFindHeroesDTO {
   };
 }
 
-interface HeroesRepository {
-  findHeroes(dto?: iFindHeroesDTO): Promise<HeroProps[]>;
+export interface Data {
+  offset: number;
+  limit: number;
+  total: number;
+  count: number;
 
-  findHeroByName(name: string): Promise<HeroProps[]>;
+  results: HeroProps[];
+}
+
+interface HeroesRepository {
+  findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
+
+  findHeroByName(name: string): Promise<Data>;
 }
 
 export default HeroesRepository;
