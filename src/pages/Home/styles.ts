@@ -10,31 +10,7 @@ export const Container = styled.div`
 `;
 
 export const HeroesContainer = styled.div`
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-
-  /* BREAKPOINT 576px */
-  @media (min-width: ${(props) => props.theme.sizes.SM}) {
-    max-width: 540px;
-  }
-
-  /* BREAKPOINT 768px */
-  @media (min-width: ${(props) => props.theme.sizes.MD}) {
-    max-width: 720px;
-  }
-
-  /* BREAKPOINT 992px */
-  @media (min-width: ${(props) => props.theme.sizes.LG}) {
-    max-width: 960px;
-  }
-
-  /* BREAKPOINT 1200px */
-  @media (min-width: ${(props) => props.theme.sizes.XL}) {
-    max-width: 1200px;
-  }
+  ${(props) => props.theme.sizes && props.theme.sizes.responsiveContainer}
 `;
 
 export const HeroesGrid = styled.div`
