@@ -13,7 +13,7 @@ interface iApiResponse {
 class HeroRepository implements IHeroRepository {
   private api: AxiosInstance = marvelApi;
 
-  private limit = 15;
+  private limit = 10;
 
   constructor(mApi: AxiosInstance) {
     this.api = mApi;
