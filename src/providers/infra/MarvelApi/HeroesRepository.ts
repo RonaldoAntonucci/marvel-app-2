@@ -2,12 +2,18 @@ import { AxiosInstance } from 'axios';
 import IHeroRepository, {
   iFindHeroesDTO,
   Data,
+  iInfos,
+  HeroProps,
 } from '../../../repositories/iHeroesRepository';
 
 import marvelApi from './api';
 
 interface iApiResponse {
   data: Data;
+}
+
+interface iFindHeroesResponse {
+  data: iInfos & { results: HeroProps[] };
 }
 
 class HeroRepository implements IHeroRepository {
@@ -40,12 +46,12 @@ class HeroRepository implements IHeroRepository {
     return { ...response.data.data, page: Math.trunc(offset / this.limit + 1) };
   }
 
-  async findHeroByName(name: string): Promise<Data> {
-    const response = await this.api.get<iApiResponse>(`characters`, {
-      params: { nameStartsWith: name },
-    });
+  async findHeroById(id: string): Promise<HeroProps> {
+    const response = await this.api.get<iFindHeroesResponse>(
+      `/characters/${id}`,
+    );
 
-    return response.data.data;
+    return response.data.data.results[0];
   }
 }
 

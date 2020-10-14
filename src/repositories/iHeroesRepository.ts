@@ -1,10 +1,35 @@
+export interface Comic {
+  name: number;
+  resourceURI: string;
+}
+
+export interface Serie {
+  name: number;
+  resourceURI: string;
+}
+
 export interface HeroProps {
   id: string;
   name: string;
+  description: string;
 
   thumbnail: {
     path: string;
     extension: string;
+  };
+
+  comics: {
+    available: number;
+    collectionURI: string;
+
+    items: Comic[];
+  };
+
+  series: {
+    available: number;
+    collectionURI: string;
+
+    items: Serie[];
   };
 }
 
@@ -13,6 +38,13 @@ export interface iFindHeroesDTO {
     nameStartsWith?: string;
   };
   page?: number;
+}
+
+export interface iInfos {
+  offset: number;
+  limit: number;
+  total: number;
+  count: number;
 }
 
 export interface Data {
@@ -29,7 +61,7 @@ export interface Data {
 interface HeroesRepository {
   findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
 
-  findHeroByName(name: string): Promise<Data>;
+  findHeroById(id: string): Promise<HeroProps>;
 }
 
 export default HeroesRepository;
