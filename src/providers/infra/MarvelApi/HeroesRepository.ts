@@ -4,6 +4,7 @@ import IHeroRepository, {
   Data,
   iInfos,
   HeroProps,
+  IComic,
 } from '../../../repositories/iHeroesRepository';
 
 import marvelApi from './api';
@@ -14,6 +15,17 @@ interface iApiResponse {
 
 interface iFindHeroesResponse {
   data: iInfos & { results: HeroProps[] };
+}
+
+interface iReturnComic extends Omit<IComic, 'thumbnail'> {
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
+
+interface iFindComicsResponse {
+  data: iInfos & { results: iReturnComic[] };
 }
 
 class HeroRepository implements IHeroRepository {
@@ -52,6 +64,19 @@ class HeroRepository implements IHeroRepository {
     );
 
     return response.data.data.results[0];
+  }
+
+  async findComics(id: string): Promise<IComic[]> {
+    const response = await this.api.get<iFindComicsResponse>(
+      `/characters/${id}/comics`,
+    );
+
+    const formattedData = response.data.data.results.map((result) => ({
+      ...result,
+      thumbnail: `${result.thumbnail.path}.${result.thumbnail.extension}`,
+    }));
+
+    return formattedData;
   }
 }
 

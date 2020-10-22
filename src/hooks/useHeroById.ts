@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import IHeroRepository from '../repositories/iHeroesRepository';
-
 export interface Comic {
   name: string;
   resourceURI: string;
@@ -41,10 +39,11 @@ interface useHeroData {
   hero: Hero | null;
 }
 
-const useHeroById = (
-  heroRepo: IHeroRepository,
-  heroId: string,
-): useHeroData => {
+interface iRepository {
+  findHeroById(heroId: string): Promise<Hero | null>;
+}
+
+const useHeroById = (heroRepo: iRepository, heroId: string): useHeroData => {
   const [hero, setHero] = useState<Hero | null>(null);
 
   useEffect(() => {

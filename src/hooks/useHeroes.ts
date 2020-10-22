@@ -6,8 +6,6 @@ import {
   useState,
 } from 'react';
 
-import IHeroRepository from '../repositories/iHeroesRepository';
-
 import { HeroesContext } from '../contexts/heroesContext';
 
 interface HeroProps {
@@ -20,13 +18,32 @@ interface HeroProps {
   };
 }
 
-interface UseHeroes {
-  heroes: HeroProps[];
+interface HeroesListInfo {
   page: number;
   count: number;
   total: number;
   limit: number;
   offset: number;
+}
+
+interface HeroesList extends HeroesListInfo {
+  results: HeroProps[];
+}
+
+interface iRepository {
+  findHeroes(findDto?: {
+    filters: { nameStartsWith: string };
+    page: number;
+  }): Promise<HeroesList>;
+}
+
+interface UseHeroes extends Omit<HeroesList, 'results'> {
+  heroes: HeroProps[];
+  // page: number;
+  // count: number;
+  // total: number;
+  // limit: number;
+  // offset: number;
 
   loadHeroes(): void;
   setNameStartsWithFilter(hero: string): void;
@@ -35,7 +52,7 @@ interface UseHeroes {
   nameStartsWith: string;
 }
 
-const useHeroes = (heroesRepository: IHeroRepository): UseHeroes => {
+const useHeroes = (heroesRepository: iRepository): UseHeroes => {
   const heroesContexts = useContext(HeroesContext);
 
   if (!heroesContexts) {

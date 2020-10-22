@@ -1,13 +1,3 @@
-export interface Comic {
-  name: string;
-  resourceURI: string;
-}
-
-export interface Serie {
-  name: number;
-  resourceURI: string;
-}
-
 export interface HeroProps {
   id: string;
   name: string;
@@ -22,7 +12,7 @@ export interface HeroProps {
     available: number;
     collectionURI: string;
 
-    items: Comic[];
+    items: { name: string; resourceURI: string }[];
   };
 
   series: {
@@ -31,6 +21,20 @@ export interface HeroProps {
 
     items: Serie[];
   };
+}
+
+export interface IComic {
+  id: string;
+  title: string;
+  issueNumber: string;
+  description?: string;
+
+  thumbnail: string;
+}
+
+export interface Serie {
+  name: number;
+  resourceURI: string;
 }
 
 export interface iFindHeroesDTO {
@@ -62,6 +66,8 @@ interface HeroesRepository {
   findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
 
   findHeroById(id: string): Promise<HeroProps>;
+
+  findComics(heroId: string): Promise<IComic[]>;
 }
 
 export default HeroesRepository;

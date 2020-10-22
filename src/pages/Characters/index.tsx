@@ -17,7 +17,6 @@ import {
   HeroInfo,
   HeroInfoCard,
   Content,
-  ComicContainer,
   SeriesContainer,
 } from './styles';
 
@@ -29,7 +28,7 @@ const Characters: React.FC = () => {
   const { id } = useParams<CharactersParams>();
 
   const { hero } = useHeroById(HeroRepository, id);
-  const { comics } = useComics();
+  const { comics } = useComics(HeroRepository, id);
 
   return (
     <Container>
