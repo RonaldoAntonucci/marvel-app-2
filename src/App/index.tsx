@@ -11,7 +11,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AppProvider>
-        <Header />
+        <Header searchLocations={['/']} />
         <Routes />
       </AppProvider>
 

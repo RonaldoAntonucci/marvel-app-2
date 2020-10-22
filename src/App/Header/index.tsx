@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { memo, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import useHero from '../../hooks/useHeroes';
 import HeroRepository from '../../providers/HeroesRepository';
@@ -8,10 +8,21 @@ import useDebounce from '../../hooks/useDebounce';
 
 import { Container, Logo, SearchContainer } from './styles';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  searchLocations?: string[];
+}
+
+const Header: React.FC<HeaderProps> = ({ searchLocations }) => {
   const { setNameStartsWithFilter } = useHero(HeroRepository);
 
   const handleSearch = useDebounce(setNameStartsWithFilter, 1000);
+
+  const { pathname } = useLocation();
+
+  const showSearchInput = useMemo(
+    () => !searchLocations || searchLocations.includes(pathname),
+    [pathname, searchLocations],
+  );
 
   return (
     <Container>
@@ -32,14 +43,16 @@ const Header: React.FC = () => {
         </Link>
       </Logo>
 
-      <SearchContainer>
-        <input
-          type="search"
-          name="search"
-          placeholder="Procure seu herói favorito."
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-      </SearchContainer>
+      {showSearchInput && (
+        <SearchContainer>
+          <input
+            type="search"
+            name="search"
+            placeholder="Procure seu herói favorito."
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </SearchContainer>
+      )}
     </Container>
   );
 };
