@@ -1,5 +1,5 @@
 export interface Comic {
-  name: number;
+  name: string;
   resourceURI: string;
 }
 

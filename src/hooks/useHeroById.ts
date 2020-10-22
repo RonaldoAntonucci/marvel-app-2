@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import IHeroRepository from '../repositories/iHeroesRepository';
 
 export interface Comic {
-  name: number;
+  name: string;
   resourceURI: string;
 }
 

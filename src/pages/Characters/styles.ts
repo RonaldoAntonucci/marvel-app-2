@@ -2,22 +2,22 @@ import styled from 'styled-components';
 
 import MarvelBackgroundImg from '../../assets/bg-marvel.jpg';
 
-export const Container = styled.div.attrs(() => ({
+export const Container = styled.div``;
+
+export const HeroDetailsContainer = styled.div.attrs(() => ({
   style: { background: `url(${MarvelBackgroundImg}) no-repeat center center` },
 }))`
+  > div {
+    ${(props) => props.theme.sizes.responsiveContainer}
+
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
   width: 100%;
-
   background-size: cover;
-
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-`;
-
-export const HeroDetailsContainer = styled.div`
-  ${(props) => props.theme.sizes.responsiveContainer}
-
-  display: flex;
-  flex-wrap: wrap;
 `;
 
 export const Thumbnail = styled.div`
@@ -155,4 +155,74 @@ export const HeroInfoCard = styled.div`
       }
     }
   }
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  padding: 2rem 0;
+
+  > div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      width: 100%;
+      margin-bottom: 2rem;
+
+      display: flex;
+      align-items: center;
+
+      color: ${(props) => props.theme.colors.grey};
+
+      h2 {
+        font-size: 2.25rem;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  ${(props) => props.theme.sizes.responsiveContainer}
+
+  ul {
+    vertical-align: middle;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    padding-left: 0;
+    list-style: none;
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.MD}) {
+    ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.LG}) {
+    width: calc(50% - 15px);
+    margin-right: 15px;
+
+    ul {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.XL}) {
+    width: calc(60% - 15px);
+
+    ul {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+`;
+
+export const ComicContainer = styled.div`
+  width: 100%;
+`;
+
+export const SeriesContainer = styled.div`
+  width: 100%;
 `;
