@@ -5,8 +5,11 @@ import IHeroRepository, {
   iInfos,
   HeroProps,
   IComic,
+  iSerie,
   iFindComicsResponse,
   iFindComicsOpts,
+  iFindSeriesOpts,
+  iFindSeriesResponse,
 } from '../../../repositories/iHeroesRepository';
 
 import marvelApi from './api';
@@ -28,6 +31,17 @@ interface iReturnComic extends Omit<IComic, 'thumbnail'> {
 
 interface iFindComicsApiResponse {
   data: iInfos & { results: iReturnComic[] };
+}
+
+interface iApiReturnSerie extends Omit<iSerie, 'thumbnail'> {
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
+
+interface iFindSeriesApiResponse {
+  data: iInfos & { results: iApiReturnSerie[] };
 }
 
 class HeroRepository implements IHeroRepository {
@@ -79,6 +93,36 @@ class HeroRepository implements IHeroRepository {
     const offset = page * limit - limit;
 
     const response = await this.api.get<iFindComicsApiResponse>(
+      `/characters/${id}/comics`,
+      { params: { limit, offset } },
+    );
+
+    const formattedData = response.data.data.results.map((result) => ({
+      ...result,
+      thumbnail: `${result.thumbnail.path}.${result.thumbnail.extension}`,
+    }));
+
+    return {
+      page: 1,
+      results: formattedData,
+      offset: response.data.data.offset,
+      count: response.data.data.count,
+      total: response.data.data.total,
+      limit: response.data.data.limit,
+    };
+  }
+
+  async findSeries(
+    id: string,
+    opts: iFindSeriesOpts = { limit: 20 },
+  ): Promise<iFindSeriesResponse> {
+    const page = opts?.page || 1;
+
+    const limit = opts.limit || this.limit;
+
+    const offset = page * limit - limit;
+
+    const response = await this.api.get<iFindSeriesApiResponse>(
       `/characters/${id}/comics`,
       { params: { limit, offset } },
     );

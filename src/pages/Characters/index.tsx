@@ -7,6 +7,7 @@ import { BiCameraMovie } from 'react-icons/bi';
 import HeroRepository from '../../providers/HeroesRepository';
 import useHeroById from '../../hooks/useHeroById';
 import useComics from '../../hooks/useComics';
+import useSeries from '../../hooks/useSeries';
 
 import Comic from '../../components/Comic';
 import Pagination from '../../components/Pagination';
@@ -38,6 +39,13 @@ const Characters: React.FC = () => {
     total: comicsTotal,
     setPage: setComicsPage,
   } = useComics(HeroRepository, id);
+  const {
+    series,
+    page: seriesPage,
+    limit: seriesLimit,
+    total: seriesTotal,
+    setPage: setSeriesPage,
+  } = useSeries(HeroRepository, id);
 
   return (
     <Container>
@@ -120,16 +128,24 @@ const Characters: React.FC = () => {
               </div>
 
               <ul>
-                {comics.map((comic) => (
+                {series.map((serie) => (
                   <Comic
-                    key={comic.id}
-                    thumbnail={comic.thumbnail}
-                    title={comic.title}
-                    issueNumber={comic.issueNumber}
-                    description={comic.description}
+                    key={serie.id}
+                    thumbnail={serie.thumbnail}
+                    title={serie.title}
+                    issueNumber={serie.creators}
+                    description={serie.description}
                   />
                 ))}
               </ul>
+
+              <Pagination
+                page={seriesPage}
+                limit={seriesLimit}
+                total={seriesTotal}
+                handlePage={setSeriesPage}
+                size="small"
+              />
             </SeriesContainer>
           </div>
         </Flex>

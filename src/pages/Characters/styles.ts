@@ -233,6 +233,7 @@ export const SeriesContainer = styled.div`
     margin-bottom: 2rem;
 
     display: flex;
+    flex: 1;
     align-items: center;
 
     color: ${(props) => props.theme.colors.grey};

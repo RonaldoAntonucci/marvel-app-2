@@ -6,7 +6,7 @@ export interface Comic {
 }
 
 export interface Serie {
-  name: number;
+  name: string;
   resourceURI: string;
 }
 

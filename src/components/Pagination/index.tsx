@@ -6,6 +6,7 @@ interface PaginationProps {
   page: number;
   total: number;
   limit: number;
+  size?: 'small' | 'normal';
 
   handlePage: React.Dispatch<SetStateAction<number>>;
 }
@@ -14,6 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({
   page,
   total,
   limit,
+  size = 'normal',
   handlePage,
 }) => {
   const lastPage = useMemo(() => Math.trunc((total - 1) / limit) + 1, [
@@ -51,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
           ...
         </PageNumbersButtons>
         <PageNumbersButtons
-          inactive={page - 1 <= 1}
+          inactive={size === 'small' || page - 1 <= 1}
           onClick={() => handlePage(page - 2)}
         >
           {page - 2}
@@ -70,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
           {page + 1}
         </PageNumbersButtons>
         <PageNumbersButtons
-          inactive={page + 2 > lastPage}
+          inactive={size === 'small' || page + 2 > lastPage}
           onClick={() => handlePage(page + 2)}
         >
           {page + 2}

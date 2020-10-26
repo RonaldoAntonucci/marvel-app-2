@@ -17,7 +17,7 @@ interface SerieMeta {
 interface Serie {
   id: string;
   title: string;
-  issueNumber: string;
+  creators: string;
   description?: string;
 
   thumbnail: string;

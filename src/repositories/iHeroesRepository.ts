@@ -19,7 +19,7 @@ export interface HeroProps {
     available: number;
     collectionURI: string;
 
-    items: Serie[];
+    items: { name: string; resourceURI: string }[];
   };
 }
 
@@ -32,9 +32,12 @@ export interface IComic {
   thumbnail: string;
 }
 
-export interface Serie {
-  name: number;
-  resourceURI: string;
+export interface iSerie {
+  id: string;
+  title: string;
+  description?: string;
+  thumbnail: string;
+  creators: string;
 }
 
 export interface iFindHeroesDTO {
@@ -73,15 +76,31 @@ export interface iFindComicsResponse extends iInfos {
   results: IComic[];
 }
 
+export interface iFindSeriesOpts {
+  limit?: number;
+  page?: number;
+}
+
+export interface iFindSeriesResponse extends iInfos {
+  page: number;
+
+  results: iSerie[];
+}
+
 interface HeroesRepository {
   findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
 
-  findHeroById(id: string): Promise<HeroProps>;
+  findHeroById(id: string): Promise<HeroProps | null>;
 
   findComics(
     heroId: string,
     opts?: iFindComicsOpts,
   ): Promise<iFindComicsResponse>;
+
+  findSeries(
+    heroId: string,
+    opts?: iFindSeriesOpts,
+  ): Promise<iFindSeriesResponse>;
 }
 
 export default HeroesRepository;
