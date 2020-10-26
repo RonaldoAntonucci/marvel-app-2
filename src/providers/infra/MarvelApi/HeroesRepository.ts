@@ -1,10 +1,10 @@
 import { AxiosInstance } from 'axios';
 import IHeroRepository, {
   iFindHeroesDTO,
-  Data,
-  iInfos,
-  HeroProps,
-  IComic,
+  iFindHeroesResponse,
+  iMetaData,
+  iHero,
+  iComic,
   iSerie,
   iFindComicsResponse,
   iFindComicsOpts,
@@ -15,14 +15,14 @@ import IHeroRepository, {
 import marvelApi from './api';
 
 interface iApiResponse {
-  data: Data;
+  data: iFindHeroesResponse;
 }
 
-interface iFindHeroesResponse {
-  data: iInfos & { results: HeroProps[] };
+interface iFindHeroesApiResponse {
+  data: iMetaData & { results: iHero[] };
 }
 
-interface iReturnComic extends Omit<IComic, 'thumbnail'> {
+interface iReturnComic extends Omit<iComic, 'thumbnail'> {
   thumbnail: {
     path: string;
     extension: string;
@@ -30,7 +30,7 @@ interface iReturnComic extends Omit<IComic, 'thumbnail'> {
 }
 
 interface iFindComicsApiResponse {
-  data: iInfos & { results: iReturnComic[] };
+  data: iMetaData & { results: iReturnComic[] };
 }
 
 interface iApiReturnSerie extends Omit<iSerie, 'thumbnail' | 'creators'> {
@@ -43,7 +43,7 @@ interface iApiReturnSerie extends Omit<iSerie, 'thumbnail' | 'creators'> {
 }
 
 interface iFindSeriesApiResponse {
-  data: iInfos & { results: iApiReturnSerie[] };
+  data: iMetaData & { results: iApiReturnSerie[] };
 }
 
 class HeroRepository implements IHeroRepository {
@@ -55,7 +55,9 @@ class HeroRepository implements IHeroRepository {
     this.api = mApi;
   }
 
-  async findHeroes(findHeroesDTO?: iFindHeroesDTO): Promise<Data> {
+  async findHeroes(
+    findHeroesDTO?: iFindHeroesDTO,
+  ): Promise<iFindHeroesResponse> {
     const page = findHeroesDTO?.page || 1;
 
     const offset = page * this.limit - this.limit;
@@ -76,8 +78,8 @@ class HeroRepository implements IHeroRepository {
     return { ...response.data.data, page: Math.trunc(offset / this.limit + 1) };
   }
 
-  async findHeroById(id: string): Promise<HeroProps> {
-    const response = await this.api.get<iFindHeroesResponse>(
+  async findHeroById(id: string): Promise<iHero> {
+    const response = await this.api.get<iFindHeroesApiResponse>(
       `/characters/${id}`,
     );
 

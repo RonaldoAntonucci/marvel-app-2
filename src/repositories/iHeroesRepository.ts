@@ -1,4 +1,5 @@
-export interface HeroProps {
+// Models
+export interface iHero {
   id: string;
   name: string;
   description: string;
@@ -23,7 +24,7 @@ export interface HeroProps {
   };
 }
 
-export interface IComic {
+export interface iComic {
   id: string;
   title: string;
   issueNumber: number;
@@ -39,6 +40,7 @@ export interface iSerie {
   thumbnail: string;
   creators: string[];
 }
+// DTOS
 
 export interface iFindHeroesDTO {
   filters?: {
@@ -47,14 +49,16 @@ export interface iFindHeroesDTO {
   page?: number;
 }
 
-export interface iInfos {
+// responses
+
+export interface iMetaData {
   offset: number;
   limit: number;
   total: number;
   count: number;
 }
 
-export interface Data {
+export interface iFindHeroesResponse {
   offset: number;
   limit: number;
   total: number;
@@ -62,18 +66,26 @@ export interface Data {
 
   page: number;
 
-  results: HeroProps[];
+  results: iHero[];
 }
+
+export interface iFindComicsResponse extends iMetaData {
+  page: number;
+
+  results: iComic[];
+}
+
+export interface iFindSeriesResponse extends iMetaData {
+  page: number;
+
+  results: iSerie[];
+}
+
+// options
 
 export interface iFindComicsOpts {
   limit?: number;
   page?: number;
-}
-
-export interface iFindComicsResponse extends iInfos {
-  page: number;
-
-  results: IComic[];
 }
 
 export interface iFindSeriesOpts {
@@ -81,16 +93,10 @@ export interface iFindSeriesOpts {
   page?: number;
 }
 
-export interface iFindSeriesResponse extends iInfos {
-  page: number;
-
-  results: iSerie[];
-}
-
 interface HeroesRepository {
-  findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
+  findHeroes(dto?: iFindHeroesDTO): Promise<iFindHeroesResponse>;
 
-  findHeroById(id: string): Promise<HeroProps | null>;
+  findHeroById(id: string): Promise<iHero | null>;
 
   findComics(
     heroId: string,
