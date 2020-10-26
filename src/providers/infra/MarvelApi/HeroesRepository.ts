@@ -33,11 +33,13 @@ interface iFindComicsApiResponse {
   data: iInfos & { results: iReturnComic[] };
 }
 
-interface iApiReturnSerie extends Omit<iSerie, 'thumbnail'> {
+interface iApiReturnSerie extends Omit<iSerie, 'thumbnail' | 'creators'> {
   thumbnail: {
     path: string;
     extension: string;
   };
+
+  creators: { items: { name: string }[] };
 }
 
 interface iFindSeriesApiResponse {
@@ -130,6 +132,7 @@ class HeroRepository implements IHeroRepository {
     const formattedData = response.data.data.results.map((result) => ({
       ...result,
       thumbnail: `${result.thumbnail.path}.${result.thumbnail.extension}`,
+      creators: result.creators.items.map((creator) => creator.name),
     }));
 
     return {

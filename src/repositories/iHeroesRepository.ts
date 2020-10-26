@@ -35,9 +35,9 @@ export interface IComic {
 export interface iSerie {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   thumbnail: string;
-  creators: string;
+  creators: string[];
 }
 
 export interface iFindHeroesDTO {

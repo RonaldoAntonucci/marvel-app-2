@@ -10,6 +10,7 @@ import useComics from '../../hooks/useComics';
 import useSeries from '../../hooks/useSeries';
 
 import Comic from '../../components/Comic';
+import Serie from '../../components/Serie';
 import Pagination from '../../components/Pagination';
 
 import {
@@ -129,11 +130,11 @@ const Characters: React.FC = () => {
 
               <ul>
                 {series.map((serie) => (
-                  <Comic
+                  <Serie
                     key={serie.id}
                     thumbnail={serie.thumbnail}
                     title={serie.title}
-                    issueNumber={serie.creators}
+                    creators={serie.creators}
                     description={serie.description}
                   />
                 ))}
