@@ -36,6 +36,7 @@ const Characters: React.FC = () => {
     page: comicsPage,
     limit: comicsLimit,
     total: comicsTotal,
+    setPage: setComicsPage,
   } = useComics(HeroRepository, id);
 
   return (
@@ -108,7 +109,7 @@ const Characters: React.FC = () => {
                 page={comicsPage}
                 limit={comicsLimit}
                 total={comicsTotal}
-                handlePage={(a) => console.log(a)}
+                handlePage={setComicsPage}
               />
             </ComicsContainer>
 

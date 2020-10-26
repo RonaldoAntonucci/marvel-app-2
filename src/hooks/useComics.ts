@@ -41,14 +41,20 @@ const useComics = (repository: iRepository, heroId: string): useComicsData => {
   const [comics, setComics] = useState<Comic[]>([]);
   const [count, setCount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(8);
   const [offset, setOffset] = useState<number>(0);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const page = useMemo(() => Math.trunc(offset / limit) + 1, [limit, offset]);
+  const page = useMemo(() => Math.trunc(offset / limit) + 1 || 1, [
+    limit,
+    offset,
+  ]);
 
-  const lastPage = useMemo(() => Math.trunc(total / limit) + 1, [limit, total]);
+  const lastPage = useMemo(() => Math.trunc((total - 1) / limit) + 1 || 1, [
+    limit,
+    total,
+  ]);
 
   const setPage = useCallback(
     (value) => {

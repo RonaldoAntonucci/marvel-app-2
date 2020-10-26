@@ -111,7 +111,7 @@ const useHeroes = (heroesRepository: iRepository): UseHeroes => {
 
   const setPage = useCallback(
     (value) => {
-      const lastPage = Math.trunc(total / limit) + 1;
+      const lastPage = Math.trunc((total - 1) / limit) + 1;
       let cb;
 
       if (typeof value === 'function') {

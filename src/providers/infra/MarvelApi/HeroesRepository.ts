@@ -72,9 +72,15 @@ class HeroRepository implements IHeroRepository {
     id: string,
     opts: iFindComicsOpts = { limit: 20 },
   ): Promise<iFindComicsResponse> {
+    const page = opts?.page || 1;
+
+    const limit = opts.limit || this.limit;
+
+    const offset = page * limit - limit;
+
     const response = await this.api.get<iFindComicsApiResponse>(
       `/characters/${id}/comics`,
-      { params: { limit: opts.limit } },
+      { params: { limit, offset } },
     );
 
     const formattedData = response.data.data.results.map((result) => ({

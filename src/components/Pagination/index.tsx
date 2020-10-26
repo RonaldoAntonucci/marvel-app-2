@@ -16,7 +16,10 @@ const Pagination: React.FC<PaginationProps> = ({
   limit,
   handlePage,
 }) => {
-  const lastPage = useMemo(() => Math.trunc(total / limit) + 1, [limit, total]);
+  const lastPage = useMemo(() => Math.trunc((total - 1) / limit) + 1, [
+    limit,
+    total,
+  ]);
 
   const handleNextPage = useCallback(() => {
     handlePage((prevPage) => prevPage + 1);
@@ -80,7 +83,7 @@ const Pagination: React.FC<PaginationProps> = ({
         </PageNumbersButtons>
       </div>
 
-      <Button onClick={handleNextPage} name="next">
+      <Button onClick={handleNextPage} name="next" disable={page >= lastPage}>
         Próximo
       </Button>
     </Container>
