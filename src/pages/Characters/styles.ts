@@ -160,27 +160,33 @@ export const HeroInfoCard = styled.div`
 export const Content = styled.div`
   width: 100%;
   padding: 2rem 0;
+`;
 
+export const Flex = styled.div`
   ${(props) => props.theme.sizes.responsiveContainer}
 
   > div {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+  }
+`;
 
-    > div {
-      width: 100%;
-      margin-bottom: 2rem;
+export const ComicsContainer = styled.div`
+  width: 100%;
 
-      display: flex;
-      align-items: center;
+  > div {
+    width: 100%;
+    margin-bottom: 2rem;
 
-      color: ${(props) => props.theme.colors.grey};
+    display: flex;
+    align-items: center;
 
-      h2 {
-        font-size: 2.25rem;
-        margin-left: 15px;
-      }
+    color: ${(props) => props.theme.colors.grey};
+
+    h2 {
+      font-size: 2.25rem;
+      margin-left: 15px;
     }
   }
 
@@ -219,10 +225,52 @@ export const Content = styled.div`
   }
 `;
 
-export const ComicContainer = styled.div`
-  width: 100%;
-`;
-
 export const SeriesContainer = styled.div`
   width: 100%;
+  > div {
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+
+    color: ${(props) => props.theme.colors.grey};
+
+    h2 {
+      font-size: 2.25rem;
+      margin-left: 15px;
+    }
+  }
+
+  ul {
+    vertical-align: middle;
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+
+    padding-left: 0;
+    list-style: none;
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.SM}) {
+    ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.LG}) {
+    width: calc(50% - 15px);
+    margin-left: 15px;
+
+    > div {
+      margin-top: 0;
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.XL}) {
+    width: calc(35% - 20px);
+    margin-left: 20px;
+  }
 `;

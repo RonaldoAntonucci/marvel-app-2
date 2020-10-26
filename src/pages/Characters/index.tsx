@@ -17,6 +17,8 @@ import {
   HeroInfo,
   HeroInfoCard,
   Content,
+  Flex,
+  ComicsContainer,
   SeriesContainer,
 } from './styles';
 
@@ -77,43 +79,47 @@ const Characters: React.FC = () => {
       </HeroDetailsContainer>
 
       <Content>
-        <div>
+        <Flex>
           <div>
-            <HiOutlineBookOpen size="34" />
-            <h2>Quadrinhos</h2>
+            <ComicsContainer>
+              <div>
+                <HiOutlineBookOpen size="34" />
+                <h2>Quadrinhos</h2>
+              </div>
+
+              <ul>
+                {comics.map((comic) => (
+                  <Comic
+                    key={comic.id}
+                    thumbnail={comic.thumbnail}
+                    title={comic.title}
+                    issueNumber={comic.issueNumber}
+                    description={comic.description}
+                  />
+                ))}
+              </ul>
+            </ComicsContainer>
+
+            <SeriesContainer>
+              <div>
+                <BiCameraMovie size="34" />
+                <h2>Series</h2>
+              </div>
+
+              <ul>
+                {comics.map((comic) => (
+                  <Comic
+                    key={comic.id}
+                    thumbnail={comic.thumbnail}
+                    title={comic.title}
+                    issueNumber={comic.issueNumber}
+                    description={comic.description}
+                  />
+                ))}
+              </ul>
+            </SeriesContainer>
           </div>
-
-          <ul>
-            {comics.map((comic) => (
-              <Comic
-                key={comic.id}
-                thumbnail={comic.thumbnail}
-                title={comic.title}
-                issueNumber={comic.issueNumber}
-                description={comic.description}
-              />
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <div>
-            <BiCameraMovie size="34" />
-            <h2>Series</h2>
-          </div>
-
-          <ul>
-            {comics.map((comic) => (
-              <Comic
-                key={comic.id}
-                thumbnail={comic.thumbnail}
-                title={comic.title}
-                issueNumber={comic.issueNumber}
-                description={comic.description}
-              />
-            ))}
-          </ul>
-        </div>
+        </Flex>
       </Content>
     </Container>
   );
