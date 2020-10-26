@@ -4,6 +4,7 @@ import {
   useContext,
   useMemo,
   useState,
+  Dispatch,
 } from 'react';
 
 import { HeroesContext } from '../contexts/heroesContext';
@@ -52,7 +53,10 @@ interface UseHeroes extends Omit<HeroesList, 'results'> {
   nameStartsWith: string;
 }
 
-const useHeroes = (heroesRepository: iRepository): UseHeroes => {
+const useHeroes = (
+  heroesRepository: iRepository,
+  setLoading: Dispatch<SetStateAction<boolean>> | null = null,
+): UseHeroes => {
   const heroesContexts = useContext(HeroesContext);
 
   if (!heroesContexts) {
@@ -81,6 +85,7 @@ const useHeroes = (heroesRepository: iRepository): UseHeroes => {
   const page = useMemo(() => Math.trunc(offset / limit) + 1, [limit, offset]);
 
   const loadHeroes = useCallback(async () => {
+    setLoading && setLoading(true);
     const apiHeroes = await heroesRepository.findHeroes({
       filters: { nameStartsWith },
       page: currentPage,
@@ -91,15 +96,18 @@ const useHeroes = (heroesRepository: iRepository): UseHeroes => {
     setCount(apiHeroes.count);
     setTotal(apiHeroes.total);
     setLimit(apiHeroes.limit);
+
+    setLoading && setLoading(false);
   }, [
+    setLoading,
     heroesRepository,
     nameStartsWith,
     currentPage,
-    setCount,
     setHeroes,
-    setLimit,
     setOffset,
+    setCount,
     setTotal,
+    setLimit,
   ]);
 
   const setNameStartsWithFilter = useCallback(

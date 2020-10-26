@@ -4,6 +4,7 @@ import {
   useMemo,
   useState,
   SetStateAction,
+  Dispatch,
 } from 'react';
 
 interface SerieMeta {
@@ -37,7 +38,11 @@ interface iRepository {
   ): Promise<{ page: number; results: Serie[] } & SerieMeta>;
 }
 
-const useSeries = (repository: iRepository, heroId: string): useSeriesData => {
+const useSeries = (
+  repository: iRepository,
+  heroId: string,
+  setLoading: Dispatch<SetStateAction<boolean>> | null = null,
+): useSeriesData => {
   const [series, setSeries] = useState<Serie[]>([]);
   const [count, setCount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
@@ -83,6 +88,7 @@ const useSeries = (repository: iRepository, heroId: string): useSeriesData => {
   );
 
   useEffect(() => {
+    setLoading && setLoading(true);
     repository
       .findSeries(heroId, { limit: 4, page: currentPage })
       .then((data) => {
@@ -91,8 +97,9 @@ const useSeries = (repository: iRepository, heroId: string): useSeriesData => {
         setTotal(data.total);
         setLimit(data.limit);
         setOffset(data.offset);
+        setLoading && setLoading(false);
       });
-  }, [heroId, repository, currentPage]);
+  }, [heroId, repository, currentPage, setLoading]);
 
   return { series, count, total, limit, offset, page, setPage, lastPage };
 };

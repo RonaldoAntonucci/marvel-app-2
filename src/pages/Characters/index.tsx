@@ -24,6 +24,7 @@ import {
   ComicsContainer,
   SeriesContainer,
 } from './styles';
+import useLoading from '../../hooks/useLoading';
 
 interface CharactersParams {
   id: string;
@@ -31,15 +32,16 @@ interface CharactersParams {
 
 const Characters: React.FC = () => {
   const { id } = useParams<CharactersParams>();
+  const { setLoading } = useLoading();
 
-  const { hero } = useHeroById(HeroRepository, id);
+  const { hero } = useHeroById(HeroRepository, id, setLoading);
   const {
     comics,
     page: comicsPage,
     limit: comicsLimit,
     total: comicsTotal,
     setPage: setComicsPage,
-  } = useComics(HeroRepository, id);
+  } = useComics(HeroRepository, id, setLoading);
   const {
     series,
     page: seriesPage,

@@ -14,7 +14,7 @@ interface LoadingProviderProps {
 }
 
 interface LoadingProviderData {
-  loadingState: [boolean, Dispatch<SetStateAction<boolean>>];
+  loadingState: [number, Dispatch<SetStateAction<number>>];
 }
 
 const LoadingContext = createContext<LoadingProviderData>(
@@ -25,7 +25,7 @@ const LoadingProvider: React.FC<LoadingProviderProps> = ({
   children,
   Component,
 }) => {
-  const loadingState = useState(false);
+  const loadingState = useState(0);
 
   const [loading] = loadingState;
 
@@ -35,7 +35,7 @@ const LoadingProvider: React.FC<LoadingProviderProps> = ({
         loadingState,
       }}
     >
-      <Component loading={loading} />
+      <Component loading={!!loading} />
       {children}
     </LoadingContext.Provider>
   );

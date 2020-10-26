@@ -4,6 +4,7 @@ import {
   useMemo,
   useState,
   SetStateAction,
+  Dispatch,
 } from 'react';
 
 interface ComicMeta {
@@ -37,7 +38,11 @@ interface iRepository {
   ): Promise<{ page: number; results: Comic[] } & ComicMeta>;
 }
 
-const useComics = (repository: iRepository, heroId: string): useComicsData => {
+const useComics = (
+  repository: iRepository,
+  heroId: string,
+  setLoading: Dispatch<SetStateAction<boolean>> | null = null,
+): useComicsData => {
   const [comics, setComics] = useState<Comic[]>([]);
   const [count, setCount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
@@ -83,6 +88,7 @@ const useComics = (repository: iRepository, heroId: string): useComicsData => {
   );
 
   useEffect(() => {
+    setLoading && setLoading(true);
     repository
       .findComics(heroId, { limit: 8, page: currentPage })
       .then((data) => {
@@ -91,8 +97,9 @@ const useComics = (repository: iRepository, heroId: string): useComicsData => {
         setTotal(data.total);
         setLimit(data.limit);
         setOffset(data.offset);
+        setLoading && setLoading(false);
       });
-  }, [heroId, repository, currentPage]);
+  }, [heroId, repository, currentPage, setLoading]);
 
   return { comics, count, total, limit, offset, page, setPage, lastPage };
 };

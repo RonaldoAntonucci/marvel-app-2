@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 
 export interface Comic {
   name: string;
@@ -43,14 +43,20 @@ interface iRepository {
   findHeroById(heroId: string): Promise<Hero | null>;
 }
 
-const useHeroById = (heroRepo: iRepository, heroId: string): useHeroData => {
+const useHeroById = (
+  heroRepo: iRepository,
+  heroId: string,
+  setLoading: Dispatch<SetStateAction<boolean>> | null = null,
+): useHeroData => {
   const [hero, setHero] = useState<Hero | null>(null);
 
   useEffect(() => {
+    setLoading && setLoading(true);
     heroRepo.findHeroById(heroId).then((heroResponse) => {
       setHero(heroResponse);
+      setLoading && setLoading(false);
     });
-  }, [heroId, heroRepo]);
+  }, [heroId, heroRepo, setLoading]);
 
   return { hero };
 };

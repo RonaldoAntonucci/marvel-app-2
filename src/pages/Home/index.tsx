@@ -7,8 +7,11 @@ import HeroCard from '../../components/HeroCard';
 import Pagination from '../../components/Pagination';
 
 import { Container, HeroesContainer, HeroesGrid } from './styles';
+import useLoading from '../../hooks/useLoading';
 
 const Home: React.FC = () => {
+  const { setLoading } = useLoading();
+
   const {
     loadHeroes,
     heroes,
@@ -17,7 +20,7 @@ const Home: React.FC = () => {
     setPage,
     total,
     limit,
-  } = useHeroes(HeroesRepository);
+  } = useHeroes(HeroesRepository, setLoading);
 
   useEffect(() => {
     loadHeroes();
