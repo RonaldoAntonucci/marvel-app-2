@@ -36,7 +36,8 @@ $ yarn start
 ```
 ## :rocket: Technologies
 
--  [ReactJS](https://reactjs.org/)
+-  [TypeScript](https://www.typescriptlang.org/)
+-  [React](https://reactjs.org/)
 -  [React Router v4](https://github.com/ReactTraining/react-router)
 -  [Axios](https://github.com/axios/axios)
 -  [styled-components](https://www.styled-components.com/)
