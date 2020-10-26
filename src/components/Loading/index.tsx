@@ -8,7 +8,7 @@ interface LoadingProps {
 
 const Loading: React.FC<LoadingProps> = ({ loading }) => {
   return (
-    <Container loading={loading}>
+    <Container active={loading}>
       <LoadingIcon />
     </Container>
   );

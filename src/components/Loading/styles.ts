@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ContainerProps {
-  loading: boolean;
+  active: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
@@ -11,7 +11,7 @@ const Container = styled.div<ContainerProps>`
   right: 0;
   top: 0;
   align-items: center;
-  display: ${(props) => (props.loading ? 'flex' : 'none')};
+  display: ${(props) => (props.active ? 'flex' : 'none')};
   justify-content: center;
   overflow: hidden;
   z-index: 999;
