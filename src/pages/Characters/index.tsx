@@ -96,7 +96,24 @@ const Characters: React.FC = () => {
           </ul>
         </div>
 
-        <SeriesContainer>Series</SeriesContainer>
+        <div>
+          <div>
+            <BiCameraMovie size="34" />
+            <h2>Series</h2>
+          </div>
+
+          <ul>
+            {comics.map((comic) => (
+              <Comic
+                key={comic.id}
+                thumbnail={comic.thumbnail}
+                title={comic.title}
+                issueNumber={comic.issueNumber}
+                description={comic.description}
+              />
+            ))}
+          </ul>
+        </div>
       </Content>
     </Container>
   );

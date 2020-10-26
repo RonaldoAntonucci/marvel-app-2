@@ -161,6 +161,8 @@ export const Content = styled.div`
   width: 100%;
   padding: 2rem 0;
 
+  ${(props) => props.theme.sizes.responsiveContainer}
+
   > div {
     width: 100%;
     display: flex;
@@ -181,8 +183,6 @@ export const Content = styled.div`
       }
     }
   }
-
-  ${(props) => props.theme.sizes.responsiveContainer}
 
   ul {
     vertical-align: middle;

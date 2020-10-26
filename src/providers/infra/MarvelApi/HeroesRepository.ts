@@ -5,6 +5,8 @@ import IHeroRepository, {
   iInfos,
   HeroProps,
   IComic,
+  iFindComicsResponse,
+  iFindComicsOpts,
 } from '../../../repositories/iHeroesRepository';
 
 import marvelApi from './api';
@@ -24,7 +26,7 @@ interface iReturnComic extends Omit<IComic, 'thumbnail'> {
   };
 }
 
-interface iFindComicsResponse {
+interface iFindComicsApiResponse {
   data: iInfos & { results: iReturnComic[] };
 }
 
@@ -66,9 +68,13 @@ class HeroRepository implements IHeroRepository {
     return response.data.data.results[0];
   }
 
-  async findComics(id: string): Promise<IComic[]> {
-    const response = await this.api.get<iFindComicsResponse>(
+  async findComics(
+    id: string,
+    opts: iFindComicsOpts = { limit: 20 },
+  ): Promise<iFindComicsResponse> {
+    const response = await this.api.get<iFindComicsApiResponse>(
       `/characters/${id}/comics`,
+      { params: { limit: opts.limit } },
     );
 
     const formattedData = response.data.data.results.map((result) => ({
@@ -76,7 +82,14 @@ class HeroRepository implements IHeroRepository {
       thumbnail: `${result.thumbnail.path}.${result.thumbnail.extension}`,
     }));
 
-    return formattedData;
+    return {
+      page: 1,
+      results: formattedData,
+      offset: response.data.data.offset,
+      count: response.data.data.count,
+      total: response.data.data.total,
+      limit: response.data.data.limit,
+    };
   }
 }
 

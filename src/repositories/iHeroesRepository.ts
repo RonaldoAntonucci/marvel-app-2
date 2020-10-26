@@ -62,12 +62,26 @@ export interface Data {
   results: HeroProps[];
 }
 
+export interface iFindComicsOpts {
+  limit?: number;
+  page?: number;
+}
+
+export interface iFindComicsResponse extends iInfos {
+  page: number;
+
+  results: IComic[];
+}
+
 interface HeroesRepository {
   findHeroes(dto?: iFindHeroesDTO): Promise<Data>;
 
   findHeroById(id: string): Promise<HeroProps>;
 
-  findComics(heroId: string): Promise<IComic[]>;
+  findComics(
+    heroId: string,
+    opts?: iFindComicsOpts,
+  ): Promise<iFindComicsResponse>;
 }
 
 export default HeroesRepository;
