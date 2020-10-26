@@ -17,7 +17,7 @@ interface ComicMeta {
 interface Comic {
   id: string;
   title: string;
-  issueNumber: string;
+  issueNumber: number;
   description?: string;
 
   thumbnail: string;

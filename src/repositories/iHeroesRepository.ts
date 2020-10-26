@@ -26,7 +26,7 @@ export interface HeroProps {
 export interface IComic {
   id: string;
   title: string;
-  issueNumber: string;
+  issueNumber: number;
   description?: string;
 
   thumbnail: string;

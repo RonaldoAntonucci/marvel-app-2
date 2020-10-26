@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ModalProps {
+  show: boolean;
+}
+
 export const BookThumbnail = styled.div`
   display: block;
   width: 100%;
@@ -105,7 +109,7 @@ export const Container = styled.div`
   }
 
   &:hover {
-    p {
+    > p {
       color: ${(props) => props.theme.colors.red};
     }
 
@@ -127,5 +131,138 @@ export const Container = styled.div`
       transform: translate3d(0px, 0, 0);
       bottom: 10px;
     }
+  }
+`;
+
+export const Modal = styled.div<ModalProps>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+
+  display: ${(props) => (props.show ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
+
+  > div {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+
+    background: white;
+    border-radius: 8px;
+
+    padding: 20px;
+
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    @media (min-width: ${(props) => props.theme.sizes.SM}) {
+      max-height: 700px;
+      overflow-y: hidden;
+    }
+
+    @media (min-width: ${(props) => props.theme.sizes.MD}) {
+      max-width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+`;
+
+export const ModalClose = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  button {
+    padding: 10px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    outline: 0;
+
+    font-weight: bold;
+    color: ${(props) => props.theme.colors.red};
+  }
+`;
+
+export const ModalThumbnail = styled.div`
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  margin-top: 2rem;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  > div {
+    position: absolute;
+    top: -6px;
+    right: -11px;
+
+    p {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+      color: white;
+      background: ${(props) => props.theme.colors.red};
+    }
+  }
+
+  @media (min-width: ${(props) => props.theme.sizes.MD}) {
+    width: 30%;
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+`;
+
+export const ModalDetails = styled.div`
+  @media (min-width: ${(props) => props.theme.sizes.MD}) {
+    width: 70%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+`;
+
+export const ModalTitle = styled.div`
+  width: 100%;
+  margin-top: 1rem;
+
+  p {
+    font-weight: bold;
+    font-size: 1.125rem;
+  }
+`;
+
+export const ModalDescription = styled.div`
+  width: 100%;
+
+  h2 {
+    font-size: 1.125rem;
+    color: ${(props) => props.theme.colors.red};
+    margin-bottom: 1rem;
   }
 `;
