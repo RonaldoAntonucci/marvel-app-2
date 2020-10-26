@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { HiOutlineBookOpen } from 'react-icons/hi';
 import { BiCameraMovie } from 'react-icons/bi';
 
-import HeroRepository from '../../providers/HeroesRepository';
+import HeroRepository from '../../repositories/infra/HeroesRepository';
 import useHeroById from '../../hooks/useHeroById';
 import useComics from '../../hooks/useComics';
 import useSeries from '../../hooks/useSeries';

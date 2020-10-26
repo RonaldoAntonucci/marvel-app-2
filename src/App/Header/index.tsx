@@ -1,19 +1,21 @@
 import React, { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import useHero from '../../hooks/useHeroes';
-import HeroRepository from '../../providers/HeroesRepository';
+import useHeroes from '../../hooks/useHeroes';
+import HeroRepository from '../../repositories/infra/HeroesRepository';
 
 import useDebounce from '../../hooks/useDebounce';
 
 import { Container, Logo, SearchContainer } from './styles';
+import useLoading from '../../hooks/useLoading';
 
 interface HeaderProps {
   searchLocations?: string[];
 }
 
 const Header: React.FC<HeaderProps> = ({ searchLocations }) => {
-  const { setNameStartsWithFilter } = useHero(HeroRepository);
+  const { setLoading } = useLoading();
+  const { setNameStartsWithFilter } = useHeroes(HeroRepository, setLoading);
 
   const handleSearch = useDebounce(setNameStartsWithFilter, 1000);
 

@@ -10,9 +10,9 @@ import IHeroRepository, {
   iFindComicsOpts,
   iFindSeriesOpts,
   iFindSeriesResponse,
-} from '../../../repositories/iHeroesRepository';
+} from '../iHeroesRepository';
 
-import marvelApi from './api';
+import marvelApi from '../../providers/infra/MarvelApi';
 
 interface iApiResponse {
   data: iFindHeroesResponse;
