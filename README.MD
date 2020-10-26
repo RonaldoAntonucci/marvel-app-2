@@ -1,7 +1,7 @@
 <h1 align="center">
     <img alt="Marvel API" src="https://res.cloudinary.com/dnwprn0cn/image/upload/v1601946957/samples/logo-marvel_qzs294.png" />
     <br>
-    Marvel App
+    Marvel App 2
 </h1>
 
 <p align="center">
