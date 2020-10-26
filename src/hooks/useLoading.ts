@@ -16,9 +16,9 @@ interface useLoadingData {
 const useLoading = (): useLoadingData => {
   const loadingContext = useContext(LoadingContext);
 
-  const [loadingState, setLoadingState] = loadingContext.loadingState;
+  const [loadingStateValue, setLoadingState] = loadingContext.loadingState;
 
-  const loading = useMemo(() => !!loadingState, [loadingState]);
+  const loading = useMemo(() => !!loadingStateValue, [loadingStateValue]);
 
   const setLoading = useCallback(
     (loadingValue) => {

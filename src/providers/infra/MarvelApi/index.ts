@@ -1,11 +1,17 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import md5 from 'md5';
 
-export const URL_API = 'https://gateway.marvel.com:443/v1/public/';
+export const URL_API = process.env.REACT_APP_MARVEL_URL_API;
 
-export const PUBLIC_KEY = '60114b4252d585e8c9ac72c1f5d3ad4e';
+export const PUBLIC_KEY = process.env.REACT_APP_MARVEL_PUBLIC_KEY;
 
-export const PRIVATE_KEY = '3b3cccdf7f219c6fe78a1b0e8c8c6f314e0e189d';
+export const PRIVATE_KEY = process.env.REACT_APP_MARVEL_PRIVATE_KEY;
+
+if (!URL_API || !PUBLIC_KEY || !PRIVATE_KEY) {
+  throw new Error(
+    'Invalid ENVIROMENT VARIABLES(MARVEL_URL_API or MARVEL_PUBLIC_KEY or MARVEL_PRIVATE_KEY)',
+  );
+}
 
 const timestamp = new Date().getTime();
 const hashCode = md5(timestamp + PRIVATE_KEY + PUBLIC_KEY);
