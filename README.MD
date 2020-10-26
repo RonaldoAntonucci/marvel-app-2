@@ -5,6 +5,12 @@
 </h1>
 
 <p align="center">
+    <a href="https://marvel-app-2.netlify.app/" alt="Contributors">
+        <img src="https://api.netlify.com/api/v1/badges/afe68a6e-0c61-4da2-bb68-352c88f08b37/deploy-status" /></a>
+</p>
+
+
+<p align="center">
   <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#rocket-technologies">Technologies</a>
 </p>
