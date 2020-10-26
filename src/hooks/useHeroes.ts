@@ -109,9 +109,32 @@ const useHeroes = (heroesRepository: iRepository): UseHeroes => {
     [setNameStartsWith],
   );
 
-  const setPage = useCallback((value) => {
-    setCurrentPage(value);
-  }, []);
+  const setPage = useCallback(
+    (value) => {
+      const lastPage = Math.trunc(total / limit) + 1;
+      let cb;
+
+      if (typeof value === 'function') {
+        cb = (v: number): number => {
+          const newValue = value(v);
+
+          if (newValue <= 0 || newValue > lastPage) {
+            return lastPage;
+          }
+
+          return newValue;
+        };
+      } else {
+        cb = value;
+      }
+
+      if (value <= 0 || value > lastPage) {
+        return;
+      }
+      setCurrentPage(cb);
+    },
+    [limit, total],
+  );
 
   return {
     heroes,

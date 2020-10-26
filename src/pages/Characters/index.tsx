@@ -9,6 +9,7 @@ import useHeroById from '../../hooks/useHeroById';
 import useComics from '../../hooks/useComics';
 
 import Comic from '../../components/Comic';
+import Pagination from '../../components/Pagination';
 
 import {
   Container,
@@ -30,7 +31,12 @@ const Characters: React.FC = () => {
   const { id } = useParams<CharactersParams>();
 
   const { hero } = useHeroById(HeroRepository, id);
-  const { comics } = useComics(HeroRepository, id);
+  const {
+    comics,
+    page: comicsPage,
+    limit: comicsLimit,
+    total: comicsTotal,
+  } = useComics(HeroRepository, id);
 
   return (
     <Container>
@@ -98,6 +104,12 @@ const Characters: React.FC = () => {
                   />
                 ))}
               </ul>
+              <Pagination
+                page={comicsPage}
+                limit={comicsLimit}
+                total={comicsTotal}
+                handlePage={(a) => console.log(a)}
+              />
             </ComicsContainer>
 
             <SeriesContainer>

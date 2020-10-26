@@ -72,7 +72,12 @@ const Pagination: React.FC<PaginationProps> = ({
         >
           {page + 2}
         </PageNumbersButtons>
-        <PageNumbersButtons onClick={handleLastPage}>...</PageNumbersButtons>
+        <PageNumbersButtons
+          onClick={handleLastPage}
+          inactive={page >= lastPage}
+        >
+          ...
+        </PageNumbersButtons>
       </div>
 
       <Button onClick={handleNextPage} name="next">
