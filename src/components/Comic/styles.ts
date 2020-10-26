@@ -1,16 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: inline-block;
-  margin-bottom: 1rem;
-
-  text-align: center;
-
-  p {
-    margin-top: 1rem;
-  }
-`;
-
 export const BookThumbnail = styled.div`
   display: block;
   width: 100%;
@@ -63,5 +52,80 @@ export const BookThumbnail = styled.div`
 
   &::after {
     left: -6px;
+  }
+`;
+
+export const ReadMore = styled.div`
+  position: absolute;
+  bottom: 10px;
+
+  left: 0;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 50px, 0);
+
+  width: 100%;
+  text-align: center;
+
+  button {
+    padding: 10px 15px;
+    background: ${(props) => props.theme.colors.red};
+    color: white;
+    cursor: pointer;
+    border: 0;
+    border-radius: 8px;
+
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+
+    outline: 0;
+    -webkit-transform: rotateY(-25deg);
+    transform: rotateY(-25deg);
+    box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.2);
+
+    transition: 0.5s all ease;
+
+    &:hover {
+      background: ${(props) => props.theme.colors.grey};
+    }
+  }
+`;
+
+export const Container = styled.div`
+  display: inline-block;
+  margin-bottom: 1rem;
+
+  text-align: center;
+
+  p {
+    margin-top: 1rem;
+  }
+
+  &:hover {
+    p {
+      color: ${(props) => props.theme.colors.red};
+    }
+
+    ${BookThumbnail} {
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25),
+        0 9px 20px 0 rgba(0, 0, 0, 0.45);
+
+      img {
+        -webkit-transform: rotateY(-25deg);
+        transform: rotateY(-25deg);
+        box-shadow: 1px 1px 5px 5px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    ${ReadMore} {
+      opacity: 1;
+      visibility: visible;
+      transition: 0.3s;
+      transform: translate3d(0px, 0, 0);
+      bottom: 10px;
+    }
   }
 `;

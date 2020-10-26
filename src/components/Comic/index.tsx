@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { Container, BookThumbnail } from './styles';
+import { Container, BookThumbnail, ReadMore } from './styles';
 
 interface ComicProps {
   title: string;
@@ -10,10 +10,17 @@ interface ComicProps {
 }
 
 const Comic: React.FC<ComicProps> = ({ title, thumbnail }) => {
+  const handleShowMore = useCallback(() => console.log('show'), []);
   return (
     <Container>
       <BookThumbnail>
         <img src={thumbnail} alt={title} />
+
+        <ReadMore>
+          <button type="button" onClick={handleShowMore}>
+            Saiba Mais
+          </button>
+        </ReadMore>
       </BookThumbnail>
 
       <p>{title}</p>
